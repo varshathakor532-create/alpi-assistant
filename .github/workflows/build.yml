@@ -1,0 +1,24 @@
+name: Buildozer Android APK
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1.2.1
+        id: buildozer
+        with:
+          command: buildozer android debug
+          buildozer_version: master
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: Alpi-Assistant-APK
+          path: ${{ steps.buildozer.outputs.apk_path }}
